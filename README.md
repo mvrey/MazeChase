@@ -18,6 +18,8 @@
 
 You spawn somewhere inside a 15x15 labyrinth and must locate the illuminated exit column before the minotaur reaches you. Doors and switches gate shortcuts; torches and a personal flashlight are your only sources of light.
 
+![Hero exploring the labyrinth](Screenshots/hero.png)
+
 ### Sanity & immersion
 
 `AMazeChaseCharacter` tracks `nervousness_` (see `MazeChaseCharacter.cpp`). Sprinting, shouting, or being close to the minotaur raises the meter, which in turn:
@@ -27,6 +29,8 @@ You spawn somewhere inside a 15x15 labyrinth and must locate the illuminated exi
 - Triggers post-process materials (configured in Blueprints) and audio cues.
 
 Sanity gradually recovers when you slow down, incentivising deliberate movement.
+
+![Low sanity HUD feedback](Screenshots/lowsanity.png)
 
 ### Procedural labyrinth
 
@@ -43,6 +47,8 @@ Designers can regenerate the maze per level, delete generated actors, or bake a 
 
 `ADoorButton` holds references to one or more `ADoor` actors. When the player lines up the crosshair with a button (`AMazeChaseCharacter::Tick` raycasts 100 units forward) and presses `E`, linked doors begin their open/close timers, play FMOD grind sounds (`ADoor::Tick`), and eventually return to their closed state.
 
+![Crouching to stay silent while interacting](Screenshots/crouch.png)
+
 ### Minotaur AI
 
 The villain (`AMinotaur`) combines:
@@ -52,6 +58,10 @@ The villain (`AMinotaur`) combines:
 - `AMinotaurController` which boots the behavior tree (`BehaviorTreeComp->StartTree`).
 
 The AI chases until `chase_time_` expires, then falls back to patrolling randomly generated target points the labyrinth spawns.
+
+![Minotaur patrolling the maze](Screenshots/minotaur.png)
+
+![Caught by the minotaur](Screenshots/minotaurfood.png)
 
 ### Audio
 
@@ -70,7 +80,7 @@ All music/SFX are authored in FMOD Studio 1.09 and loaded through the bundled `P
 | Move              | `WASD` / Arrow keys      | Movement is relative to camera forward. |
 | Look              | Mouse                    | Mouse sensitivity defined in `Config/DefaultInput.ini`. |
 | Jump              | `Space`                  | Triggers FMOD jump event. |
-| Interact / Fly    | `E`                      | Press doors buttons when raycast finds `BP_DoorButton`. |
+| Interact          | `E`                      | Press doors buttons when raycast finds `BP_DoorButton`. |
 | Run               | `Left Shift`             | +50% speed, adds noise & sanity drain. |
 | Sneak             | `Left Ctrl`              | 50% speed, minimal noise. |
 | Shout             | `Q`                      | Massive noise spike that lures the minotaur. |
